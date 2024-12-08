@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 use Illuminate\Support\Facades\Auth;
-Auth::routes();
+Auth::routes(); // php artisan route:list
 
 Route::get('/{page}', 'App\Http\Controllers\MainController')->where('page', '.*');
