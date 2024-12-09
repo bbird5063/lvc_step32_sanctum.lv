@@ -10,7 +10,7 @@ export default {
 	name: 'Get',
 	data() {
 		return {
-			error: null,
+			error: null, // я сам добавил
 		}
 	},
 
@@ -27,7 +27,7 @@ export default {
 				.catch(error => {
 					console.log(error.response.status);
 					console.log(error.response.data.message);
-					this.error = `${error.response.status}  ${error.response.data.message}`
+					this.error = `${error.response.status}  ${error.response.data.message}`;
 				})
 			
 		}
