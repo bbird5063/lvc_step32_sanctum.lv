@@ -2,10 +2,11 @@
 	<div>
 		<router-link class="me-1" :to="{ name: 'get.index' }">Get </router-link>
 		<router-link class="me-1" :to="{ name: 'user.login' }">Login </router-link>
+		<router-link class="me-1" :to="{ name: 'user.personal' }">Personal </router-link>
 		<router-link class="me-1" :to="{ name: 'user.registration' }">Registration </router-link>
 		<a @click.prevent="logout" href="#">Logout</a>
 		<div v-if="error" class="text-danger">{{ error }}</div> <!--я сам воткнул на всякий случай-->
-		<router-view></router-view>
+		<router-view :key="$route.fullPath"></router-view>
 	</div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
 				axios.post('/logout')
 					.then(res => {
 						console.log(res);
+						localStorage.removeItem('x-xsrf-token');
 						this.$router.push({name: 'user.login'});
 					})
 					.catch(error => { // я сам воткнул на всякий случай

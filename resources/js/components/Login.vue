@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { getCookie } from '../functionGetCookie'; // добавили
 export default {
 	name: 'Login',
 	data() {
@@ -24,15 +25,17 @@ export default {
 
 				axios.post('/login', { email: this.email, password: this.password })
 					.then(res => {
-						console.log(res);
+						console.log(res.config.headers['X-XSRF-TOKEN']); // undefined
+						console.log(getCookie('XSRF-TOKEN'));
+						localStorage.setItem('x-xsrf-token', getCookie('XSRF-TOKEN'));
+						this.$router.push({ name: 'user.personal' });
+
 					})
 					.catch(error => {
 						console.log(error.response.data.message);
 						this.error = `${error.response.status}  ${error.response.data.message}`;
 					})
-
 			});
-
 		}
 	},
 }

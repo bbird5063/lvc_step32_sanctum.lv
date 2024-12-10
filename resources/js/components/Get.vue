@@ -6,6 +6,7 @@
 </template>
 
 <script>
+//import { getCookie } from '../functionGetCookie' // тут не надо
 export default {
 	name: 'Get',
 	data() {
@@ -20,9 +21,12 @@ export default {
 
 	methods: {
 		getData() {
+			
 			axios.get('/api/get')
 				.then(res => {
+					console.log(document.cookie);
 					console.log(res);
+					//console.log(res.config.headers['X-XSRF-TOKEN']); // нету
 				})
 				.catch(error => {
 					console.log(error.response.status);
@@ -30,7 +34,7 @@ export default {
 					this.error = `${error.response.status}  ${error.response.data.message}`;
 				})
 			
-		}
+		},
 	},
 }
 </script>

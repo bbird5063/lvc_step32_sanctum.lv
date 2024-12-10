@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { getCookie } from '../functionGetCookie'; // добавили
 export default {
 	name: 'Registration',
 	data() {
@@ -26,16 +27,10 @@ export default {
 		}
 	},
 
-	mounted() {
-
-	},
-
 	methods: {
 		register() {
-
 			axios.get('/sanctum/csrf-cookie') // здесь не бывает '.catch(error...'
 				.then(response => {
-
 					axios.post('/register', {
 						name: this.name,
 						email: this.email,
@@ -43,15 +38,16 @@ export default {
 						password_confirmation: this.password_confirmation
 					})
 						.then(res => {
-							console.log(res);
+							console.log(res); // там нет res.config.headers['X-XSRF-TOKEN']
+							console.log(getCookie('XSRF-TOKEN'));
+							localStorage.setItem('x-xsrf-token', getCookie('XSRF-TOKEN'));
+							this.$router.push({ name: 'user.personal' });
 						})
 						.catch(error => {  // я сам добавил
-							console.log(error.response);
+							console.log(error);
 							this.error = `${error.response.status}  ${error.response.data.message}`;
 						})
 				})
-
-
 		}
 
 	},

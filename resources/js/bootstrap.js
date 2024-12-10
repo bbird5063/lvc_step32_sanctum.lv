@@ -12,6 +12,8 @@ window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 axios.defaults.withCredentials = true; // ВСТАВИЛИ
+axios.defaults.withXSRFToken = true; // Я ВСТАВИЛ, ПРОБА
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

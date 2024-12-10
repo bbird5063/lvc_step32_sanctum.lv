@@ -17,13 +17,17 @@ const routes = [
 		path: '/user/registration', component: () => import('./components/Registration.vue'),
 		name: 'user.registration'
 	},
+	{
+		path: '/user/personal', component: () => import('./components/Personal.vue'),
+		name: 'user.personal'
+	},
+
 
 	/* Если в адресной строке ввели страницу, которой нет */
 	{
 		path: '/:catchAll(.*)', component: () => import('./components/Get.vue'),
 		name: '404' // от балды
 	},
-
 ];
 
 const router = new createRouter({ // работает с и без 'new'
