@@ -1,4 +1,5 @@
 import 'bootstrap';
+import router from './router';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -13,6 +14,20 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 axios.defaults.withCredentials = true; // ВСТАВИЛИ
 axios.defaults.withXSRFToken = true; // Я ВСТАВИЛ, ПРОБА
+
+window.axios.interceptors.response.use({}, err => { // ВСТАВИЛИ
+	console.log(err.response); // {data: {…}, status: 401,...
+	console.log(err.response.status); // {data: {…}, status: 401,...
+	//console.log(err.status); // {data: {…}, status: 401,...
+	if (err.response.status == 401 || err.response.status == 419) { // 419 - из документации
+		const token = localStorage.getItem('x-xsrf-token');
+		console.log(token);
+		if (token) {
+			localStorage.removeItem('x-xsrf-token');
+		}
+		router.push({name: 'user.login'});
+	}
+});
 
 
 /**

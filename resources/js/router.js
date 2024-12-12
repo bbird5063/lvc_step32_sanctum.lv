@@ -35,4 +35,30 @@ const router = new createRouter({ // работает с и без 'new'
 	history: createWebHistory(),
 });
 
+router.beforeEach((to, from, next) => { //to->куда, from->откуда, next->callback-фукция
+	//console.log('to.name: ' + to.name); // 'user.registration'
+	//console.log('from.name: ' + from.name); // 'user.login'
+	//console.log(next); // callback-фукция
+
+	const accessToken = localStorage.getItem('x-xsrf-token');
+
+	if (accessToken) {
+		if (to.name == 'user.login') {
+			return next({
+				name: 'user.personal'
+			});
+		}
+	} else {
+		if (to.name === 'user.login' || to.name === 'user.registration') {
+			return next();
+		} else {
+			return next({
+				name: 'user.login'
+			});
+		}
+	}
+
+	next(); // на всякий случай
+});
+
 export default router;
